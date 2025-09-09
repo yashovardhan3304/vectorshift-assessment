@@ -8,7 +8,10 @@ from integrations.hubspot import authorize_hubspot, get_hubspot_credentials, get
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",  # React app address
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 app.add_middleware(
@@ -72,6 +75,6 @@ async def oauth2callback_hubspot_integration(request: Request):
 async def get_hubspot_credentials_integration(user_id: str = Form(...), org_id: str = Form(...)):
     return await get_hubspot_credentials(user_id, org_id)
 
-@app.post('/integrations/hubspot/get_hubspot_items')
-async def load_slack_data_integration(credentials: str = Form(...)):
+@app.post('/integrations/hubspot/load')
+async def load_hubspot_data_integration(credentials: str = Form(...)):
     return await get_items_hubspot(credentials)
